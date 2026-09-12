@@ -1,0 +1,632 @@
+/* ==================================================================
+   AI Student Placement Prediction System — Global Stylesheet
+   Theme: Dark navy / blue base with purple-blue gradient accents
+   ================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap');
+
+:root{
+    --bg-void:        #070A14;
+    --bg-base:        #0B0F1E;
+    --bg-panel:       #10162B;
+    --bg-panel-alt:   #141B33;
+    --border-soft:    rgba(148, 163, 255, 0.14);
+    --border-strong:  rgba(148, 163, 255, 0.28);
+
+    --purple:         #8B5CF6;
+    --purple-deep:    #6D28D9;
+    --blue:           #3B82F6;
+    --blue-deep:      #2563EB;
+    --cyan:           #22D3EE;
+
+    --grad-primary:   linear-gradient(135deg, #7C3AED 0%, #4F46E5 45%, #2563EB 100%);
+    --grad-soft:      linear-gradient(135deg, rgba(124,58,237,0.16) 0%, rgba(37,99,235,0.16) 100%);
+    --grad-text:      linear-gradient(90deg, #C4B5FD 0%, #93C5FD 100%);
+
+    --text-primary:   #F5F6FB;
+    --text-secondary: #AEB4CE;
+    --text-muted:     #7B82A3;
+
+    --green:          #34D399;
+    --red:             #F87171;
+    --amber:          #FBBF24;
+
+    --radius-lg:      20px;
+    --radius-md:      14px;
+    --radius-sm:      10px;
+
+    --shadow-card:    0 10px 30px rgba(6, 8, 20, 0.55);
+    --shadow-glow:    0 0 40px rgba(124, 58, 237, 0.25);
+}
+
+/* ---------------- Base app ---------------- */
+html, body, [class*="css"]{
+    font-family: 'Inter', -apple-system, sans-serif;
+}
+
+.stApp{
+    background:
+        radial-gradient(1200px 600px at 15% -10%, rgba(124,58,237,0.16), transparent 60%),
+        radial-gradient(1000px 500px at 100% 0%, rgba(37,99,235,0.14), transparent 55%),
+        var(--bg-base);
+    color: var(--text-primary);
+}
+
+h1,h2,h3,h4,h5,h6{
+    font-family: 'Poppins', sans-serif;
+    color: var(--text-primary);
+    letter-spacing: -0.01em;
+}
+
+p, span, label, div{
+    color: var(--text-secondary);
+}
+
+hr{
+    border: none;
+    border-top: 1px solid var(--border-soft);
+    margin: 1.4rem 0;
+}
+
+/* Hide default Streamlit chrome, including the Deploy button — we render
+   our own dark/light toggle in that spot instead (see theme.py) */
+#MainMenu {visibility: hidden;}
+footer {visibility: hidden;}
+header[data-testid="stHeader"]{
+    background: transparent;
+}
+.stDeployButton,
+.stAppDeployButton,
+[data-testid="stToolbarActions"],
+[data-testid="stDeployButton"],
+button[title="Deploy this app"]{
+    display: none !important;
+    visibility: hidden !important;
+}
+
+.block-container{
+    padding-top: 1.6rem;
+    padding-bottom: 3rem;
+    max-width: 1180px;
+}
+
+/* ---------------- Top header bar ---------------- */
+.topbar{
+    display:flex;
+    justify-content:flex-end;
+    align-items:center;
+    gap: 10px;
+    margin-bottom: 0.6rem;
+}
+.topbar-icon{
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: var(--bg-panel-alt);
+    border: 1px solid var(--border-soft);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color: var(--text-secondary);
+}
+.topbar-avatar{
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: var(--grad-primary);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#fff;
+    font-weight:700;
+    font-family:'Poppins',sans-serif;
+    box-shadow: var(--shadow-glow);
+}
+
+/* Small icon row at the very bottom of the sidebar (theme toggle + account) */
+.sidebar-bottom-icons{
+    display:flex;
+    align-items:center;
+    gap: 10px;
+    margin-top: 14px;
+    padding-left: 4px;
+}
+.sidebar-bottom-icons .topbar-icon{
+    width: 34px;
+    height: 34px;
+}
+
+/* Theme toggle rendered as a compact Streamlit toggle in the header row */
+div[data-testid="stHeader"] + div .stToggle{
+    display:flex;
+    justify-content:flex-end;
+}
+
+/* ---------------- Sidebar ---------------- */
+/* Hide Streamlit's automatic file-based page nav — we render our own
+   role-aware sidebar instead, so a logged-out student never sees a
+   list of admin page URLs. */
+[data-testid="stSidebarNav"]{
+    display: none;
+}
+
+section[data-testid="stSidebar"]{
+    background: linear-gradient(180deg, #0A0E1C 0%, #0D1226 100%);
+    border-right: 1px solid var(--border-soft);
+}
+section[data-testid="stSidebar"] .block-container{
+    padding-top: 1.2rem;
+}
+
+.sidebar-brand{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+    padding: 0.6rem 0.4rem 1.2rem 0.4rem;
+    border-bottom: 1px solid var(--border-soft);
+    margin-bottom: 1rem;
+}
+.sidebar-brand img{
+    width: 56px;
+    height: 56px;
+    border-radius: 16px;
+    object-fit: cover;
+    margin-bottom: 0.6rem;
+    box-shadow: var(--shadow-glow);
+}
+.sidebar-logo-fallback{
+    width: 56px;
+    height: 56px;
+    border-radius: 16px;
+    background: var(--grad-primary);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size: 26px;
+    margin-bottom: 0.6rem;
+    box-shadow: var(--shadow-glow);
+}
+.sidebar-brand .brand-title{
+    font-family:'Poppins',sans-serif;
+    font-weight:700;
+    font-size: 0.95rem;
+    color: var(--text-primary);
+    line-height: 1.3;
+}
+.sidebar-brand .brand-sub{
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    margin-top: 2px;
+}
+.sidebar-brand .brand-version{
+    margin-top: 8px;
+    display:inline-flex;
+    align-items:center;
+    gap: 4px;
+    padding: 3px 12px;
+    font-size: 0.7rem;
+    font-weight:600;
+    letter-spacing:0.02em;
+    color: #6EE7B7;
+    background: rgba(52,211,153,0.12);
+    border: 1px solid rgba(52,211,153,0.32);
+    border-radius: 999px;
+}
+.sidebar-brand .brand-version svg{
+    width:12px;
+    height:12px;
+}
+
+.sidebar-cta{
+    position: relative;
+    margin-top: 1.4rem;
+    padding: 1.1rem 1.1rem 1rem 1.1rem;
+    border-radius: var(--radius-md);
+    background: var(--grad-primary);
+    border: 1px solid var(--border-strong);
+    overflow: hidden;
+}
+.sidebar-cta .cta-star{
+    color: #FBBF24;
+    margin-bottom: 6px;
+}
+.sidebar-cta .cta-star svg{ width:18px; height:18px; }
+.sidebar-cta .cta-title{
+    font-family:'Poppins',sans-serif;
+    font-weight:700;
+    font-size: 0.92rem;
+    color:#fff;
+    margin-bottom: 3px;
+}
+.sidebar-cta .cta-sub{
+    font-size: 0.76rem;
+    color: rgba(255,255,255,0.82);
+}
+.sidebar-cta-art{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit: cover;
+    z-index:0;
+    opacity: 0.9;
+}
+.sidebar-cta-content{
+    position:relative;
+    z-index:1;
+}
+
+section[data-testid="stSidebar"] a{
+    color: var(--text-secondary) !important;
+}
+
+/* Sidebar nav links (st.page_link) */
+section[data-testid="stSidebar"] [data-testid="stPageLink"]{
+    border-radius: var(--radius-sm);
+    margin-bottom: 2px;
+}
+section[data-testid="stSidebar"] [data-testid="stPageLink"]:hover{
+    background: rgba(139,92,246,0.10);
+}
+
+/* ---------------- Hero banner ---------------- */
+.hero-wrap{
+    position: relative;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    padding: 0;
+    margin-bottom: 1.6rem;
+    background: linear-gradient(135deg, #0E1330 0%, #141B3D 100%);
+    border: 1px solid var(--border-soft);
+    box-shadow: var(--shadow-card);
+    min-height: 260px;
+}
+.hero-inner{
+    position:relative;
+    z-index:1;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap: 1.5rem;
+    padding: 2.4rem 2.4rem;
+    height:100%;
+}
+.hero-text{
+    max-width: 560px;
+}
+.hero-eyebrow{
+    display:inline-block;
+    font-size:0.72rem;
+    font-weight:700;
+    letter-spacing:0.10em;
+    text-transform:uppercase;
+    color: #C4B5FD;
+    background: rgba(139,92,246,0.16);
+    border: 1px solid rgba(139,92,246,0.3);
+    padding: 4px 12px;
+    border-radius: 999px;
+    margin-bottom: 1rem;
+}
+.hero-title{
+    font-family:'Poppins',sans-serif;
+    font-weight:800;
+    font-size: 2.15rem;
+    line-height:1.2;
+    color:#FFFFFF;
+    margin: 0 0 0.7rem 0;
+    display:flex;
+    align-items:center;
+    gap: 14px;
+}
+.hero-title svg{
+    width: 40px;
+    height: 40px;
+    color: #A78BFA;
+    flex-shrink:0;
+}
+.hero-sub{
+    font-size: 1rem;
+    color: var(--text-secondary);
+    margin:0;
+}
+.hero-art-wrap{
+    position:relative;
+    width: 300px;
+    height: 220px;
+    flex-shrink:0;
+    border-radius: var(--radius-md);
+    overflow:hidden;
+}
+.hero-art-wrap img{
+    width:100%;
+    height:100%;
+    object-fit: cover;
+}
+.hero-art-fallback{
+    width: 300px;
+    height: 220px;
+    border-radius: var(--radius-md);
+    background: var(--grad-soft);
+    border: 1px solid var(--border-strong);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size: 64px;
+    flex-shrink:0;
+}
+
+/* ---------------- Cards ---------------- */
+.ai-card{
+    background: var(--bg-panel);
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem 1.6rem;
+    margin-bottom: 1.2rem;
+    box-shadow: var(--shadow-card);
+    transition: border-color 0.2s ease, transform 0.2s ease;
+}
+.ai-card:hover{
+    border-color: var(--border-strong);
+}
+.card-title{
+    font-family:'Poppins',sans-serif;
+    font-weight:700;
+    font-size: 1.05rem;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+.card-subtle{
+    font-size:0.82rem;
+    color: var(--text-muted);
+    margin-top: -0.6rem;
+    margin-bottom: 1rem;
+}
+
+.metric-card{
+    background: var(--bg-panel-alt);
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius-md);
+    padding: 1.2rem 1.1rem;
+    text-align:center;
+    transition: transform 0.18s ease, border-color 0.18s ease;
+}
+.metric-card:hover{
+    transform: translateY(-3px);
+    border-color: var(--border-strong);
+}
+.metric-icon{ font-size: 1.6rem; margin-bottom: 6px; }
+.metric-value{
+    font-family:'Poppins',sans-serif;
+    font-weight:700;
+    font-size: 1.5rem;
+    color: var(--text-primary);
+}
+.metric-label{
+    font-size:0.78rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-top: 2px;
+}
+
+.result-banner{
+    border-radius: var(--radius-md);
+    padding: 1.1rem 1.3rem;
+    display:flex;
+    align-items:center;
+    gap: 0.7rem;
+    font-family:'Poppins',sans-serif;
+    font-weight:700;
+    font-size: 1.05rem;
+    margin-bottom: 1rem;
+}
+.result-high{
+    background: rgba(52,211,153,0.12);
+    border: 1px solid rgba(52,211,153,0.4);
+    color: #6EE7B7;
+}
+.result-low{
+    background: rgba(248,113,113,0.10);
+    border: 1px solid rgba(248,113,113,0.4);
+    color: #FCA5A5;
+}
+
+.tag{
+    display:inline-block;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight:600;
+    margin: 2px 4px 2px 0;
+}
+.tag-purple{ background: rgba(139,92,246,0.16); color:#C4B5FD; border:1px solid rgba(139,92,246,0.35); }
+.tag-blue{ background: rgba(59,130,246,0.16); color:#93C5FD; border:1px solid rgba(59,130,246,0.35); }
+.tag-green{ background: rgba(52,211,153,0.14); color:#6EE7B7; border:1px solid rgba(52,211,153,0.35); }
+.tag-red{ background: rgba(248,113,113,0.14); color:#FCA5A5; border:1px solid rgba(248,113,113,0.35); }
+.tag-amber{ background: rgba(251,191,36,0.14); color:#FCD34D; border:1px solid rgba(251,191,36,0.35); }
+
+.reco-box{
+    border-radius: var(--radius-md);
+    padding: 1rem 1.1rem;
+    background: var(--grad-soft);
+    border: 1px solid var(--border-strong);
+    font-size: 0.92rem;
+    line-height:1.55;
+    color: var(--text-primary);
+}
+
+.plan-item{
+    display:flex;
+    gap:10px;
+    padding: 0.65rem 0;
+    border-bottom: 1px dashed var(--border-soft);
+    font-size: 0.9rem;
+}
+.plan-item:last-child{ border-bottom:none; }
+
+/* ---------------- Buttons ---------------- */
+.stButton > button{
+    background: var(--grad-primary) !important;
+    color: #fff !important;
+    border: none !important;
+    border-radius: var(--radius-sm) !important;
+    padding: 0.65rem 1.4rem !important;
+    font-weight: 600 !important;
+    font-family: 'Poppins', sans-serif !important;
+    box-shadow: 0 6px 20px rgba(124,58,237,0.35);
+    transition: transform 0.15s ease, box-shadow 0.15s ease !important;
+}
+.stButton > button:hover{
+    transform: translateY(-2px);
+    box-shadow: 0 10px 26px rgba(124,58,237,0.5);
+}
+.stButton > button:active{
+    transform: translateY(0px);
+}
+
+/* Full-width primary CTA button variant */
+div[data-testid="stButton"] button p{
+    font-size: 0.98rem;
+}
+
+/* ---------------- Inputs ---------------- */
+.stTextInput input,
+.stNumberInput input,
+.stTextArea textarea,
+.stSelectbox div[data-baseweb="select"] > div{
+    background: var(--bg-panel-alt) !important;
+    border: 1px solid var(--border-soft) !important;
+    border-radius: 14px !important;
+    color: var(--text-primary) !important;
+    padding-top: 0.55rem !important;
+    padding-bottom: 0.55rem !important;
+}
+.stNumberInput button{
+    background: var(--bg-panel) !important;
+    border: 1px solid var(--border-soft) !important;
+    color: var(--text-secondary) !important;
+}
+.stNumberInput > div{
+    border-radius: 14px !important;
+    overflow:hidden;
+}
+
+/* Field label row with a small leading icon */
+.field-label{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-size:0.86rem;
+    font-weight:600;
+    color: var(--text-secondary);
+    margin-bottom: 0.3rem;
+}
+.field-label svg{
+    width:16px;
+    height:16px;
+    color: var(--purple);
+    flex-shrink:0;
+}
+.stTextInput input:focus,
+.stNumberInput input:focus,
+.stTextArea textarea:focus{
+    border-color: var(--purple) !important;
+    box-shadow: 0 0 0 2px rgba(139,92,246,0.25) !important;
+}
+label{
+    color: var(--text-secondary) !important;
+    font-weight: 500 !important;
+    font-size: 0.86rem !important;
+}
+.stSlider [data-baseweb="slider"]{
+    padding-top: 4px;
+}
+
+/* ---------------- Metrics ---------------- */
+div[data-testid="stMetric"]{
+    background: var(--bg-panel-alt);
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius-md);
+    padding: 0.9rem 1rem;
+}
+div[data-testid="stMetricLabel"]{
+    color: var(--text-muted) !important;
+}
+div[data-testid="stMetricValue"]{
+    color: var(--text-primary) !important;
+    font-family:'Poppins',sans-serif;
+}
+
+/* ---------------- Progress bars ---------------- */
+.stProgress > div > div{
+    background: var(--grad-primary) !important;
+}
+.stProgress > div{
+    background: rgba(255,255,255,0.06) !important;
+    border-radius: 999px;
+}
+
+/* ---------------- Section headings ---------------- */
+.section-heading{
+    font-family:'Poppins',sans-serif;
+    font-weight:700;
+    font-size: 1.3rem;
+    color: var(--text-primary);
+    margin: 1.8rem 0 0.9rem 0;
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+.section-heading .accent-bar{
+    width:4px;
+    height:20px;
+    border-radius:4px;
+    background: var(--grad-primary);
+    display:inline-block;
+}
+
+/* ---------------- Chat ---------------- */
+.stChatMessage{
+    background: var(--bg-panel-alt) !important;
+    border: 1px solid var(--border-soft) !important;
+    border-radius: var(--radius-md) !important;
+}
+
+/* ---------------- Tables ---------------- */
+.stDataFrame, .stTable{
+    border-radius: var(--radius-md);
+    overflow:hidden;
+}
+
+/* ---------------- File uploader ---------------- */
+[data-testid="stFileUploaderDropzone"]{
+    background: var(--bg-panel-alt) !important;
+    border: 1.5px dashed var(--border-strong) !important;
+    border-radius: var(--radius-md) !important;
+}
+
+/* ---------------- Tabs ---------------- */
+.stTabs [data-baseweb="tab-list"]{
+    gap: 4px;
+    border-bottom: 1px solid var(--border-soft);
+}
+.stTabs [data-baseweb="tab"]{
+    color: var(--text-muted);
+    font-weight:600;
+    border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+}
+.stTabs [aria-selected="true"]{
+    color: var(--text-primary) !important;
+    background: var(--grad-soft);
+}
+
+/* ---------------- Responsive ---------------- */
+@media (max-width: 900px){
+    .hero-inner{ flex-direction:column; text-align:center; padding: 2rem 1.4rem; }
+    .hero-title{ font-size: 1.6rem; justify-content:center; }
+    .hero-art-wrap, .hero-art-fallback{ width: 100%; height:170px; }
+}
