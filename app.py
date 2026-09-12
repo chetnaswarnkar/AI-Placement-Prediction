@@ -185,7 +185,8 @@ def render_sidebar():
             unsafe_allow_html=True,
         )
 
-        st.page_link("app.py", label="Home", icon=":material/home:")
+        if st.button("Home", icon=":material/home:", use_container_width=True):
+            st.switch_page("app.py")
         st.page_link("pages/1_Resume_Analyzer.py", label="Resume Analyzer", icon=":material/description:")
         st.page_link("pages/2_Job_Matcher.py", label="Job Matcher", icon=":material/work:")
         st.page_link("pages/3_Interview_Preparation.py", label="Interview Preparation", icon=":material/mic:")
