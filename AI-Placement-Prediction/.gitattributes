@@ -1,0 +1,10 @@
+# Force these to be treated as binary — prevents Git on Windows from
+# corrupting them via CRLF line-ending conversion, which is the most common
+# cause of a "could not load model" / "image failed to display" error after
+# a git push/pull cycle.
+*.pkl binary
+*.db binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.ico binary

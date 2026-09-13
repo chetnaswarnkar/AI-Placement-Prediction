@@ -94,13 +94,24 @@ def image_exists(path: Path) -> bool:
 
 @st.cache_resource(show_spinner=False)
 def load_model():
-    """Load the trained RandomForestClassifier. Returns None if unavailable."""
+    """Load the trained RandomForestClassifier. Returns None if unavailable.
+    On failure, the real exception is stored in session_state so the UI can
+    show a specific, actionable message instead of a generic warning."""
     try:
         if not MODEL_PATH.exists():
+            st.session_state["model_load_error"] = (
+                f"File not found at expected path: {MODEL_PATH}"
+            )
             return None
         with open(MODEL_PATH, "rb") as f:
-            return pickle.load(f)
-    except Exception:
+            model = pickle.load(f)
+        st.session_state.pop("model_load_error", None)
+        return model
+    except Exception as e:
+        import traceback
+        print("=== placement_model.pkl failed to load ===")
+        print(traceback.format_exc())
+        st.session_state["model_load_error"] = f"{type(e).__name__}: {e}"
         return None
 
 
@@ -185,8 +196,7 @@ def render_sidebar():
             unsafe_allow_html=True,
         )
 
-        if st.button("Home", icon=":material/home:", use_container_width=True):
-            st.switch_page("app.py")
+        st.page_link("app.py", label="Home", icon=":material/home:")
         st.page_link("pages/1_Resume_Analyzer.py", label="Resume Analyzer", icon=":material/description:")
         st.page_link("pages/2_Job_Matcher.py", label="Job Matcher", icon=":material/work:")
         st.page_link("pages/3_Interview_Preparation.py", label="Interview Preparation", icon=":material/mic:")
@@ -292,10 +302,19 @@ auth.require_student()
 
 model = load_model()
 if model is None:
+    error_detail = st.session_state.get("model_load_error", "Unknown error.")
     st.warning(
         "⚠️ The prediction model (`placement_model.pkl`) could not be loaded. "
         "Predictions are temporarily unavailable, but you can still explore the dashboard."
     )
+    with st.expander("🔍 Show technical details"):
+        st.code(error_detail)
+        st.caption(
+            "If this says something like 'invalid load key' or a pickle/unpickling error, "
+            "the .pkl file was likely corrupted during a Git push/pull (common on Windows). "
+            "Try re-downloading placement_model.pkl fresh and replacing it, or re-cloning the repo. "
+            "If it mentions a scikit-learn version mismatch, run: pip install --upgrade scikit-learn"
+        )
 
 # ---- Student Details form ----
 st.markdown('<div class="ai-card">', unsafe_allow_html=True)
